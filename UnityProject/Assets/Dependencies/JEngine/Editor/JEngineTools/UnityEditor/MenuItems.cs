@@ -24,10 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 #if UNITY_EDITOR
-using System.Diagnostics;
 using System.Reflection;
-using JEngine.Core;
-using libx;
 using UnityEditor;
 using UnityEngine;
 

@@ -41,7 +41,7 @@ namespace JEngine.Core
         private static Dictionary<string, Dictionary<string, string>> _phrases;//language,key,value
 
         private static string _language;
-        private const string CsvLoc = "Localization.csv";
+        private const string CsvLoc = "Localization";
 
         public static string CurrentLanguage
         {

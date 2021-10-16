@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96c19798581a285479a141fa114c8e86, type: 3}
+  m_Name: Arts
+  m_EditorClassIdentifier: 
+  packBinary: 0
+  autoGroup: 1
+  bundleExtension: 
+  autoGroupBundleMode: 2
+  defaultBundleMode: 1
+  buildAssetBundleOptions: 256
+  groups:
+  - name: Controller
+    target: {fileID: 102900000, guid: 91a19fab5f97c446da610223b59a1410, type: 3}
+    filter: 
+    active: 1
+    handleDependencies: 1
+    bundleMode: 1
+  - name: Dll
+    target: {fileID: 102900000, guid: 01b2fbf7a6f704a2686595ccdb3a192f, type: 3}
+    filter: 
+    active: 1
+    handleDependencies: 1
+    bundleMode: 1
+  - name: Material
+    target: {fileID: 102900000, guid: 5e2ab43a08f0641fb828a65fb3295620, type: 3}
+    filter: 
+    active: 1
+    handleDependencies: 1
+    bundleMode: 1
+  - name: Other
+    target: {fileID: 102900000, guid: 63a5ada31f2e64544a40b2a2ae31cbdd, type: 3}
+    filter: 
+    active: 1
+    handleDependencies: 1
+    bundleMode: 1
+  - name: Prefab
+    target: {fileID: 102900000, guid: b465b9da8a67f4c3b9abfc018e4e43f0, type: 3}
+    filter: 
+    active: 1
+    handleDependencies: 1
+    bundleMode: 1
+  - name: Scene
+    target: {fileID: 102900000, guid: fb8c8dc3987ba4ed2b5db5eca74b0330, type: 3}
+    filter: 
+    active: 1
+    handleDependencies: 1
+    bundleMode: 1
+  - name: ScriptableObject
+    target: {fileID: 102900000, guid: 7d11699a16c3b4a3b8a75a2e58654a57, type: 3}
+    filter: 
+    active: 1
+    handleDependencies: 1
+    bundleMode: 1
+  - name: TextAsset
+    target: {fileID: 102900000, guid: 5b675bc45672347c69c858fa29e8f310, type: 3}
+    filter: 
+    active: 1
+    handleDependencies: 0
+    bundleMode: 1
+  - name: UI
+    target: {fileID: 102900000, guid: 3977e53524f9341fc92ee9e44b07edaf, type: 3}
+    filter: 
+    active: 1
+    handleDependencies: 1
+    bundleMode: 2

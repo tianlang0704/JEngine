@@ -24,9 +24,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System.IO;
-using libx;
 using LitJson;
 using UnityEngine;
+using VEngine;
 
 namespace JEngine.Core
 {
@@ -67,8 +67,10 @@ namespace JEngine.Core
         {
             try
             {
-                var res = Assets.LoadAsset(path, typeof(TextAsset));
-                return ProtoBuf.Serializer.Deserialize(typeof(T), new System.IO.MemoryStream(res.bytes)) as T;
+                var res = Asset.Load(path, typeof(TextAsset));
+                if (res.asset is TextAsset ta)
+                    return ProtoBuf.Serializer.Deserialize(typeof(T), new System.IO.MemoryStream(ta.bytes)) as T;
+                return null;
             }
             catch (IOException ex)
             {
@@ -150,7 +152,7 @@ namespace JEngine.Core
         {
             try
             {
-                var res = Assets.LoadAsset(path, typeof(TextAsset));
+                var res = Asset.Load(path, typeof(TextAsset));
                 TextAsset textAsset = (TextAsset)res.asset;
 
                 if (textAsset == null)

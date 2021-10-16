@@ -4,8 +4,8 @@ using UnityEngine;
 using JEngine.Core;
 using JEngine.Helper;
 using ILRuntime.Mono.Cecil.Pdb;
-using libx;
 using UnityEngine.Serialization;
+using VEngine;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 
 public class InitJEngine : MonoBehaviour
@@ -20,7 +20,7 @@ public class InitJEngine : MonoBehaviour
     private const string PdbPath = "Assets/HotUpdateResources/Dll/Hidden~/HotUpdateScripts.pdb";
 #endif
 
-    private const string DllName = "HotUpdateScripts.bytes";
+    private const string DllName = "HotUpdateScripts";
     private const string HotMainType = "HotUpdateScripts.Program";
     private const string HotMainMethod = "RunGame";
 
@@ -36,6 +36,13 @@ public class InitJEngine : MonoBehaviour
     private Stream _fs;
     private Stream _pdb;
 
+    public String gameScene;
+
+    public string[] keys =
+    {
+        "Scene/",
+        "Prefab/",
+    };
 
     private void Awake()
     {
@@ -47,27 +54,29 @@ public class InitJEngine : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         GameStats.Initialize();
-        AssetMgr.Loggable = debug;
-        Updater.OnAssetsInitialized = (gameScene,onProgress) =>
+        Versions.customLoadPath += CustomLoadPath;
+        Versions.InitializeAsync().completed += o =>
         {
-            Assets.AddSearchPath("Assets/HotUpdateResources/Controller");
-            Assets.AddSearchPath("Assets/HotUpdateResources/Dll");
-            Assets.AddSearchPath("Assets/HotUpdateResources/Material");
-            Assets.AddSearchPath("Assets/HotUpdateResources/Other");
-            Assets.AddSearchPath("Assets/HotUpdateResources/Prefab");
-            Assets.AddSearchPath("Assets/HotUpdateResources/Scene");
-            Assets.AddSearchPath("Assets/HotUpdateResources/ScriptableObject");
-            Assets.AddSearchPath("Assets/HotUpdateResources/TextAsset");
-            Assets.AddSearchPath("Assets/HotUpdateResources/UI");
-
-            AssetMgr.LoadSceneAsync(gameScene, false, onProgress, (b) =>
+            AssetMgr.LoadSceneAsync(gameScene, false, null, (b) =>
             {
                 if (!b) return;
                 Instance.Load();
                 ClassBindMgr.Instantiate();
                 Instance.OnHotFixLoaded();
             });
-        };
+        } ;
+
+        AssetMgr.Loggable = debug;
+        
+    }
+
+    private string CustomLoadPath(string path)
+    {
+        if (Array.Exists(keys, path.Contains))
+        {
+            return Path.GetFileNameWithoutExtension(path); 
+        }
+        return null;
     }
 
     public void Load()

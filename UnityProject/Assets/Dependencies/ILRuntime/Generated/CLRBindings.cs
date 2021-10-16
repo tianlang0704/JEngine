@@ -128,9 +128,8 @@ namespace ILRuntime.Runtime.Generated
             System_TimeoutException_Binding.Register(app);
             System_IO_MemoryStream_Binding.Register(app);
             ProtoBuf_Serializer_Binding.Register(app);
-            libx_AssetRequest_Binding.Register(app);
-            libx_Reference_Binding.Register(app);
-            libx_Assets_Binding.Register(app);
+            VEngine_Loadable_Binding.Register(app);
+            VEngine_Asset_Binding.Register(app);
             System_Action_2_Boolean_CoroutineAdapter_Binding_Adaptor_Binding.Register(app);
         }
 

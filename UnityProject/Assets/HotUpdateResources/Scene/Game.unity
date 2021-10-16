@@ -1828,6 +1828,7 @@ MonoBehaviour:
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
+  m_ShouldActivateOnSelect: 1
 --- !u!114 &657951613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7204,6 +7205,10 @@ MonoBehaviour:
         fieldName: StringField1
         value: this is a string
         gameObject: {fileID: 0}
+      - fieldType: 2
+        fieldName: BoolPropertyInstance
+        value: False
+        gameObject: {fileID: 0}
   - classNamespace: JEngine.Examples
     className: AutoBindDemo2
     activeAfter: 1
@@ -7219,7 +7224,7 @@ MonoBehaviour:
         gameObject: {fileID: 0}
       - fieldType: 5
         fieldName: txtFile
-        value: Localization.csv
+        value: Localization
         gameObject: {fileID: 0}
 --- !u!4 &1925922026
 Transform:

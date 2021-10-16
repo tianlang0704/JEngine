@@ -28,12 +28,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using JEngine.Core;
-using libx;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using VEngine;
+using VEngine.Editor.Builds;
 using Object = UnityEngine.Object;
+using PlayerSettings = UnityEditor.PlayerSettings;
 
 namespace JEngine.Editor
 {
@@ -489,30 +491,22 @@ namespace JEngine.Editor
 			//如果场景
 			if (_showScenes)
 			{
-				//获取热更场景
-				Assets.basePath = BuildScript.outputPath + Path.DirectorySeparatorChar;
-				Assets.loadDelegate = AssetDatabase.LoadAssetAtPath;
-
+				//获取热更场景 
 				var assets = new List<string>();
-				var rules = BuildScript.GetBuildRules();
-				foreach (var asset in rules.scenesInBuild)
+				var builds = Build.GetAllBuilds();
+				foreach (var build in builds)
 				{
-					var path = AssetDatabase.GetAssetPath(asset);
-					if (string.IsNullOrEmpty(path))
-					{
-						continue;
-					}
-
-					assets.Add(path);
-				}
-
-				foreach (var rule in rules.rules)
-				{
-					if (rule.searchPattern.Contains("*.unity"))
-					{
-						assets.AddRange(rule.GetAssets());
-					}
-				}
+                    var array = new BuildTask(build).CollectAssets();
+					foreach (var asset in array)
+                    {
+                        assets.Add(asset.path);
+                    }
+					var path = AssetDatabase.GetAssetPath(build);
+                    if (path.EndsWith(".unity"))
+                    {
+					    assets.Add(path);
+                    } 
+				} 
 
 				foreach (var asset in assets)
 				{

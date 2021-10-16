@@ -2,8 +2,8 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using JEngine.Core;
-using libx;
 using UnityEditor;
+using VEngine.Editor.Builds;
 
 namespace JEngine.Editor
 {
@@ -33,17 +33,10 @@ namespace JEngine.Editor
                 Setting.EncryptPassword = s;
 
                 await Task.Delay(3);
-                AssetDatabase.Refresh();
-
+                AssetDatabase.Refresh(); 
                 watch = new Stopwatch();
                 watch.Start();
-                BuildScript.ApplyBuildRules();
-                watch.Stop();
-                Log.Print("ApplyBuildRules in: " + watch.ElapsedMilliseconds + " ms.");
-            
-                watch = new Stopwatch();
-                watch.Start();
-                BuildScript.BuildAssetBundles();
+                BuildScript.BuildBundles();
                 watch.Stop();
                 Log.Print("BuildAssetBundles in: " + watch.ElapsedMilliseconds + " ms."); 
             };

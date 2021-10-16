@@ -29,6 +29,9 @@
     <LangVersion>latest</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="JEngine\Core\JSaver.cs" />
@@ -108,12 +111,7 @@
       <HintPath>..\Library\ScriptAssemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Proto2cs\" />
-    <Folder Include="JEngine\Event\" />
-    <Folder Include="JEngine\Net\" />
-    <Folder Include="JEngine\Examples\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <MonoDevelop>

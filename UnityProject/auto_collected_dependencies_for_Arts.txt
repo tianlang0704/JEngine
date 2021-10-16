@@ -1,0 +1,4 @@
+Assets/Resources/Animations/START.controller
+ - assets_hotupdateresources_scene_game_unity
+Assets/Resources/Animations/TOUCHTOSTART.anim
+ - assets_hotupdateresources_scene_game_unity
