@@ -79,34 +79,34 @@ MonoBehaviour:
     name: small title02_bg.png
   bundles:
   - deps: 
-    hash: 92ad076dd7b0474de1aed16e7a9362e1
+    hash: 377e8fb4fc8745ef49d109b3cd38a24d
     id: 0
-    len: 1866246
-    name: 458d7bb25a97c536fb41988a2192cb89.unity3d
+    len: 1251629
+    name: 19d167e7859a3e1469e606027ce3feac.unity3d
   - deps: 
-    hash: 1ffc811f001d796d5db474d1c30b9f79
+    hash: dbdc9e8960fbaa480e216b9208394fa8
     id: 1
-    len: 1267
+    len: 1287
     name: 6409362d6eb671d168aa187271cd33a8.unity3d
   - deps: 
-    hash: 10537f971ad1e883810ea174d26a7bf7
+    hash: d9a206d20ede84625d00b419e7160935
     id: 2
-    len: 2739
+    len: 2757
     name: 953a764401fc4bf6d04c1c23d45b2e43.unity3d
   - deps: 0000000004000000
-    hash: 93ed0e147384734078713956e7ae323b
+    hash: 2d22abef542d07f01c3a56723f867739
     id: 3
-    len: 35276
+    len: 36749
     name: ceddc0c9b3c8bf92a5649c7282074eed.unity3d
   - deps: 
-    hash: f1aeaf929b9c954796e1ef07659d60c6
+    hash: 454a0c2f1d6550adbc951776a76e737d
     id: 4
-    len: 129519
+    len: 129950
     name: f027f62d736f2b9930b079d86f3b90c2.unity3d
   - deps: 
-    hash: b52652126b939004d007b1146fb74c04
+    hash: e8cb1ff1afba32f8f54fd50881212f85
     id: 5
-    len: 77322
+    len: 90747
     name: f1e9148d33abaae32bb165f217c22e91.unity3d
   dirs:
   - Assets/HotUpdateResources/Dll

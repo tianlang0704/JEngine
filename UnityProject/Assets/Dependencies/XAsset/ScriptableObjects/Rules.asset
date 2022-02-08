@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03142c330ced64e0ab46cddcd0484ab7, type: 3}
   m_Name: Rules
   m_EditorClassIdentifier: 
-  version: 1
+  version: 2
   scenesInBuild: []
   rules:
   - searchPath: Assets/HotUpdateResources/Controller
@@ -62,37 +62,37 @@ MonoBehaviour:
     path: Assets/HotUpdateResources/Scene/Game.unity
   - bundle: 6409362d6eb671d168aa187271cd33a8.unity3d
     path: Assets/HotUpdateResources/TextAsset/Localization.csv
-  - bundle: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - bundle: 19d167e7859a3e1469e606027ce3feac.unity3d
     path: Assets/HotUpdateResources/UI/Btn_Back_h.png
-  - bundle: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - bundle: 19d167e7859a3e1469e606027ce3feac.unity3d
     path: Assets/HotUpdateResources/UI/Btn_Buy1_n.png
-  - bundle: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - bundle: 19d167e7859a3e1469e606027ce3feac.unity3d
     path: Assets/HotUpdateResources/UI/Btn_Buy1_p.png
-  - bundle: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - bundle: 19d167e7859a3e1469e606027ce3feac.unity3d
     path: Assets/HotUpdateResources/UI/Btn_MainMenu_n.png
-  - bundle: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - bundle: 19d167e7859a3e1469e606027ce3feac.unity3d
     path: Assets/HotUpdateResources/UI/Btn_Title_p.png
-  - bundle: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - bundle: 19d167e7859a3e1469e606027ce3feac.unity3d
     path: Assets/HotUpdateResources/UI/Icon_Back1.png
-  - bundle: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - bundle: 19d167e7859a3e1469e606027ce3feac.unity3d
     path: Assets/HotUpdateResources/UI/Title2_bg.png
-  - bundle: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - bundle: 19d167e7859a3e1469e606027ce3feac.unity3d
     path: Assets/HotUpdateResources/UI/background1.png
-  - bundle: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - bundle: 19d167e7859a3e1469e606027ce3feac.unity3d
     path: Assets/HotUpdateResources/UI/background4.png
-  - bundle: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - bundle: 19d167e7859a3e1469e606027ce3feac.unity3d
     path: Assets/HotUpdateResources/UI/background4_v2.png
-  - bundle: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - bundle: 19d167e7859a3e1469e606027ce3feac.unity3d
     path: Assets/HotUpdateResources/UI/background5_v2.png
-  - bundle: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - bundle: 19d167e7859a3e1469e606027ce3feac.unity3d
     path: Assets/HotUpdateResources/UI/bg_GoodsTitle.png
-  - bundle: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - bundle: 19d167e7859a3e1469e606027ce3feac.unity3d
     path: Assets/HotUpdateResources/UI/bg_Input0_n.png
-  - bundle: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - bundle: 19d167e7859a3e1469e606027ce3feac.unity3d
     path: Assets/HotUpdateResources/UI/bg_Title1.png
-  - bundle: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - bundle: 19d167e7859a3e1469e606027ce3feac.unity3d
     path: Assets/HotUpdateResources/UI/bg_Title2 .png
-  - bundle: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - bundle: 19d167e7859a3e1469e606027ce3feac.unity3d
     path: Assets/HotUpdateResources/UI/small title02_bg.png
   ruleBundles:
   - name: f1e9148d33abaae32bb165f217c22e91.unity3d
@@ -110,15 +110,8 @@ MonoBehaviour:
   - name: 6409362d6eb671d168aa187271cd33a8.unity3d
     assets:
     - Assets/HotUpdateResources/TextAsset/Localization.csv
-  - name: 458d7bb25a97c536fb41988a2192cb89.unity3d
+  - name: 19d167e7859a3e1469e606027ce3feac.unity3d
     assets:
-    - Assets/HotUpdateResources/UI/Btn_Back_h.png
-    - Assets/HotUpdateResources/UI/Btn_Buy1_n.png
-    - Assets/HotUpdateResources/UI/Btn_Buy1_p.png
-    - Assets/HotUpdateResources/UI/Btn_MainMenu_n.png
-    - Assets/HotUpdateResources/UI/Btn_Title_p.png
-    - Assets/HotUpdateResources/UI/Icon_Back1.png
-    - Assets/HotUpdateResources/UI/Title2_bg.png
     - Assets/HotUpdateResources/UI/background1.png
     - Assets/HotUpdateResources/UI/background4.png
     - Assets/HotUpdateResources/UI/background4_v2.png
@@ -127,4 +120,11 @@ MonoBehaviour:
     - Assets/HotUpdateResources/UI/bg_Input0_n.png
     - Assets/HotUpdateResources/UI/bg_Title1.png
     - Assets/HotUpdateResources/UI/bg_Title2 .png
+    - Assets/HotUpdateResources/UI/Btn_Back_h.png
+    - Assets/HotUpdateResources/UI/Btn_Buy1_n.png
+    - Assets/HotUpdateResources/UI/Btn_Buy1_p.png
+    - Assets/HotUpdateResources/UI/Btn_MainMenu_n.png
+    - Assets/HotUpdateResources/UI/Btn_Title_p.png
+    - Assets/HotUpdateResources/UI/Icon_Back1.png
     - Assets/HotUpdateResources/UI/small title02_bg.png
+    - Assets/HotUpdateResources/UI/Title2_bg.png

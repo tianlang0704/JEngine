@@ -50,7 +50,8 @@ namespace JEngine.Core
 
         public static void QueueOnMainThread(Action action, float time)
         {
-            if (time > 0f)
+            Initialize();
+            if (time != 0)
             {
                 lock (Current._delayed)
                 {

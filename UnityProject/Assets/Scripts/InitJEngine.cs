@@ -7,6 +7,7 @@ using JEngine.Helper;
 using ILRuntime.Mono.Cecil.Pdb;
 using UnityEngine.Serialization;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
+using System.Threading.Tasks;
 
 public class InitJEngine : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class InitJEngine : MonoBehaviour
 
     //编辑器下数据，用于统计分块解密，以及提供dll和pdb的位置
 #if UNITY_EDITOR
-    public static long EncryptedCounts => ((JStream)(Instance._fs)).EncryptedCounts;
+    public static long EncryptedCounts => ((JStream)(Instance._fs))?.EncryptedCounts ?? 0;
     private const string DLLPath = "Assets/HotUpdateResources/Dll/Hidden~/HotUpdateScripts.dll";
     private const string PdbPath = "Assets/HotUpdateResources/Dll/Hidden~/HotUpdateScripts.pdb";
 #endif
@@ -47,6 +48,14 @@ public class InitJEngine : MonoBehaviour
     //是否允许debug（会产生log）
     [Tooltip("是否允许debug，勾选后产生log")] [FormerlySerializedAs("Debug")] [SerializeField]
     public bool debug = true;
+
+    //是否等待Debugger
+    [Tooltip("是否启用调试器")] [SerializeField]
+    public bool enableDebugger = true;
+
+    //是否等待Debugger
+    [Tooltip("是否等待调试器连接")] [SerializeField]
+    public bool waitForDebugger = false;
 
     //数据流
     private Stream _fs;
@@ -124,7 +133,7 @@ public class InitJEngine : MonoBehaviour
             if (File.Exists(DLLPath))
             {
                 //直接读DLL
-                dll = DLLMgr.FileToByte(DLLPath);
+                dll = DLLMgr.FileToByte(DLLPath); 
                 //模拟加密
                 dll = CryptoHelper.AesEncrypt(dll, key);
             }
@@ -153,6 +162,20 @@ public class InitJEngine : MonoBehaviour
 
             //对定义的对象赋值
             dll = dllFile.bytes;
+        }
+
+        // 启用Debugger
+        if (enableDebugger)
+            Appdomain.DebugService.StartDebugService(56000);
+        // 等待Debugger
+        if (enableDebugger && waitForDebugger)
+        {
+            var timeout = 20000;
+            var now = 0;
+            while (!Appdomain.DebugService.IsDebuggerAttached && now < timeout) {
+                Task.Delay(100).Wait();
+                now += 100;
+            }
         }
 
         //生成缓冲区，复制加密dll数据

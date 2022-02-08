@@ -111,6 +111,9 @@ namespace JEngine.Core
 
         public static List<T> FindObjectsOfTypeAll<T>()
         {
+            if (ClassBindMgr.LoadedScenes == null || ClassBindMgr.LoadedScenes.Count == 0) {
+                return new List<T>();
+            }
             return ClassBindMgr.LoadedScenes.SelectMany(scene => scene.GetRootGameObjects())
                 .SelectMany(g => g.GetComponentsInChildren<T>(true))
                 .ToList();

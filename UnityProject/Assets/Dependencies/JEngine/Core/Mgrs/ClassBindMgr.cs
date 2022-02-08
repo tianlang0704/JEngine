@@ -56,18 +56,29 @@ namespace JEngine.Core
             LoadedScenes = new List<Scene>(0) {SceneManager.GetActiveScene()};
             _cbs = new List<ClassBind>(0);
 
-            SceneManager.sceneLoaded += (scene, mode) =>
-            {
-                LoadedScenes.Add(scene);
-                DoBind();
-            };
+            SceneManager.sceneLoaded += LoadSceneHandler;
             
-            SceneManager.sceneUnloaded+=scene =>
-            {
-                LoadedScenes.Remove(scene);
-            };
+            SceneManager.sceneUnloaded += UnloadSceneHandler;
             DoBind();
         }
+
+        private void OnDestroy()
+        {
+            SceneManager.sceneLoaded -= LoadSceneHandler;
+            SceneManager.sceneUnloaded -= UnloadSceneHandler;
+            LoadedScenes.Clear();
+        }
+
+        private void LoadSceneHandler(Scene scene, LoadSceneMode mode) {
+            LoadedScenes.Add(scene);
+            DoBind();
+        }
+
+        private void UnloadSceneHandler(Scene scene) {
+            LoadedScenes.Remove(scene);
+        }
+
+        
 
         public static void DoBind(List<ClassBind> cbs)
         {
