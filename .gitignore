@@ -11,3 +11,4 @@ UnityProject/*.csproj
 UnityProject/UnityProject.sln
 UnityProject/HotUpdateScripts/obj/*
 UnityProject/ProjectSettings/*
+UnityProject/Logs/*
