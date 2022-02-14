@@ -21,7 +21,7 @@ namespace ILRuntime.Runtime.Generated
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
             Type[] args;
-            Type type = typeof(System.Threading.Tasks.Task<UnityEngine.Object>);
+            Type type = typeof(System.Threading.Tasks.Task<System.Object>);
             args = new Type[]{};
             method = type.GetMethod("GetAwaiter", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, GetAwaiter_0);
@@ -37,7 +37,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Threading.Tasks.Task<UnityEngine.Object> instance_of_this_method = (System.Threading.Tasks.Task<UnityEngine.Object>)typeof(System.Threading.Tasks.Task<UnityEngine.Object>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            System.Threading.Tasks.Task<System.Object> instance_of_this_method = (System.Threading.Tasks.Task<System.Object>)typeof(System.Threading.Tasks.Task<System.Object>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.GetAwaiter();

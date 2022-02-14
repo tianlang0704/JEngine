@@ -39,7 +39,7 @@ namespace JEngine.Core
         /// <returns></returns>
         public static T LoadRes<T>(string path, MatchMode mode = MatchMode.AutoMatch) where T : UnityEngine.Object
         {
-            return AssetMgr.Load(ResPath(path, mode), typeof(T)) as T;
+            return AssetMgr.Load<T>(ResPath(path, mode));
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace JEngine.Core
         /// <param name="mode"></param>
         public static async void LoadResAsync<T>(string path, Action<T> callback, MatchMode mode = MatchMode.AutoMatch) where T : UnityEngine.Object
         {
-            var asset = await AssetMgr.LoadAsync(path, typeof(T));
+            var asset = await AssetMgr.LoadAsync(path);
             callback?.Invoke(asset as T);
         }
 

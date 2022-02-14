@@ -413,7 +413,6 @@ GameObject:
   m_Component:
   - component: {fileID: 964396227}
   - component: {fileID: 964396226}
-  - component: {fileID: 964396228}
   - component: {fileID: 964396229}
   m_Layer: 0
   m_Name: Updater
@@ -434,10 +433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b97ae374d27c0479dce9413bde907d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseURL: http://127.0.0.1/DLC/
-  gameScene: Game.unity
-  development: 1
-  enableVFS: 1
+  gameScene: Assets/HotUpdateResources/Scene/Game.unity
   offline: 0
 --- !u!4 &964396227
 Transform:
@@ -453,20 +449,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &964396228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 964396225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0a7b861ace0d3d4baf5ebe05cdf78f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxDownloads: 3
-  sampleTime: 0.5
 --- !u!114 &964396229
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,4 @@
-﻿using libx;
-using System;
+﻿using System;
 using System.IO;
 using UnityEngine;
 using JEngine.Core;
@@ -8,6 +7,7 @@ using ILRuntime.Mono.Cecil.Pdb;
 using UnityEngine.Serialization;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 using System.Threading.Tasks;
+using JEngine;
 
 public class InitJEngine : MonoBehaviour
 {
@@ -32,6 +32,7 @@ public class InitJEngine : MonoBehaviour
     private const string HotMainType = "HotUpdateScripts.Program";
     private const string RunGameMethod = "RunGame";
     private const string SetupGameMethod = "SetupGame";
+    private const string gameScene = "Game.unity";
 
     //加密密钥
     [Tooltip("加密密钥，需要16位")] [FormerlySerializedAs("Key")] [SerializeField]
@@ -83,19 +84,19 @@ public class InitJEngine : MonoBehaviour
         //进入热更后的回调
         Updater.OnAssetsInitialized = (gameScene, onProgress) =>
         {
-            //短路径
-            Assets.AddSearchPath("Assets/HotUpdateResources/Controller");
-            Assets.AddSearchPath("Assets/HotUpdateResources/Dll");
-            Assets.AddSearchPath("Assets/HotUpdateResources/Material");
-            Assets.AddSearchPath("Assets/HotUpdateResources/Other");
-            Assets.AddSearchPath("Assets/HotUpdateResources/Prefab");
-            Assets.AddSearchPath("Assets/HotUpdateResources/Scene");
-            Assets.AddSearchPath("Assets/HotUpdateResources/ScriptableObject");
-            Assets.AddSearchPath("Assets/HotUpdateResources/TextAsset");
-            Assets.AddSearchPath("Assets/HotUpdateResources/UI");
+            // //短路径
+            // Assets.AddSearchPath("Assets/HotUpdateResources/Controller");
+            // Assets.AddSearchPath("Assets/HotUpdateResources/Dll");
+            // Assets.AddSearchPath("Assets/HotUpdateResources/Material");
+            // Assets.AddSearchPath("Assets/HotUpdateResources/Other");
+            // Assets.AddSearchPath("Assets/HotUpdateResources/Prefab");
+            // Assets.AddSearchPath("Assets/HotUpdateResources/Scene");
+            // Assets.AddSearchPath("Assets/HotUpdateResources/ScriptableObject");
+            // Assets.AddSearchPath("Assets/HotUpdateResources/TextAsset");
+            // Assets.AddSearchPath("Assets/HotUpdateResources/UI");
 
             //跳转场景并初始化热更代码
-            AssetMgr.LoadSceneAsync(gameScene, false, onProgress, (b) =>
+            AssetMgr.LoadSceneAsync(gameScene, false, null, (b) =>
             {
                 //先确保可以跳转场景
                 if (!b) return;
@@ -154,7 +155,7 @@ public class InitJEngine : MonoBehaviour
 #endif
         {
             //真机模式解密加载
-            var dllFile = (TextAsset)AssetMgr.Load(DllName, typeof(TextAsset));
+            var dllFile = AssetMgr.Load<TextAsset>(DllName);
             if (dllFile == null)
             {
                 return;

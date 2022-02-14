@@ -21,7 +21,7 @@ namespace ILRuntime.Runtime.Generated
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
             Type[] args;
-            Type type = typeof(System.Runtime.CompilerServices.TaskAwaiter<UnityEngine.Object>);
+            Type type = typeof(System.Runtime.CompilerServices.TaskAwaiter<System.Object>);
             args = new Type[]{};
             method = type.GetMethod("get_IsCompleted", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, get_IsCompleted_0);
@@ -29,12 +29,12 @@ namespace ILRuntime.Runtime.Generated
             method = type.GetMethod("GetResult", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, GetResult_1);
 
-            app.RegisterCLRCreateDefaultInstance(type, () => new System.Runtime.CompilerServices.TaskAwaiter<UnityEngine.Object>());
+            app.RegisterCLRCreateDefaultInstance(type, () => new System.Runtime.CompilerServices.TaskAwaiter<System.Object>());
 
 
         }
 
-        static void WriteBackInstance(ILRuntime.Runtime.Enviorment.AppDomain __domain, StackObject* ptr_of_this_method, IList<object> __mStack, ref System.Runtime.CompilerServices.TaskAwaiter<UnityEngine.Object> instance_of_this_method)
+        static void WriteBackInstance(ILRuntime.Runtime.Enviorment.AppDomain __domain, StackObject* ptr_of_this_method, IList<object> __mStack, ref System.Runtime.CompilerServices.TaskAwaiter<System.Object> instance_of_this_method)
         {
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
             switch(ptr_of_this_method->ObjectType)
@@ -73,7 +73,7 @@ namespace ILRuntime.Runtime.Generated
                     break;
                  case ObjectTypes.ArrayReference:
                     {
-                        var instance_of_arrayReference = __mStack[ptr_of_this_method->Value] as System.Runtime.CompilerServices.TaskAwaiter<UnityEngine.Object>[];
+                        var instance_of_arrayReference = __mStack[ptr_of_this_method->Value] as System.Runtime.CompilerServices.TaskAwaiter<System.Object>[];
                         instance_of_arrayReference[ptr_of_this_method->ValueLow] = instance_of_this_method;
                     }
                     break;
@@ -88,7 +88,7 @@ namespace ILRuntime.Runtime.Generated
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            System.Runtime.CompilerServices.TaskAwaiter<UnityEngine.Object> instance_of_this_method = (System.Runtime.CompilerServices.TaskAwaiter<UnityEngine.Object>)typeof(System.Runtime.CompilerServices.TaskAwaiter<UnityEngine.Object>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)16);
+            System.Runtime.CompilerServices.TaskAwaiter<System.Object> instance_of_this_method = (System.Runtime.CompilerServices.TaskAwaiter<System.Object>)typeof(System.Runtime.CompilerServices.TaskAwaiter<System.Object>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)16);
 
             var result_of_this_method = instance_of_this_method.IsCompleted;
 
@@ -109,7 +109,7 @@ namespace ILRuntime.Runtime.Generated
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            System.Runtime.CompilerServices.TaskAwaiter<UnityEngine.Object> instance_of_this_method = (System.Runtime.CompilerServices.TaskAwaiter<UnityEngine.Object>)typeof(System.Runtime.CompilerServices.TaskAwaiter<UnityEngine.Object>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)16);
+            System.Runtime.CompilerServices.TaskAwaiter<System.Object> instance_of_this_method = (System.Runtime.CompilerServices.TaskAwaiter<System.Object>)typeof(System.Runtime.CompilerServices.TaskAwaiter<System.Object>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)16);
 
             var result_of_this_method = instance_of_this_method.GetResult();
 
@@ -117,7 +117,12 @@ namespace ILRuntime.Runtime.Generated
             WriteBackInstance(__domain, ptr_of_this_method, __mStack, ref instance_of_this_method);
 
             __intp.Free(ptr_of_this_method);
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+            object obj_result_of_this_method = result_of_this_method;
+            if(obj_result_of_this_method is CrossBindingAdaptorType)
+            {    
+                return ILIntepreter.PushObject(__ret, __mStack, ((CrossBindingAdaptorType)obj_result_of_this_method).ILInstance, true);
+            }
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method, true);
         }
 
 

@@ -11,4 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/HotUpdateResources/Scene/Game.unity
     guid: 6b0710e96413b44a295f199f4cb022bb
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 9d062b711c86a8b45bc643a309d04096,
+      type: 2}

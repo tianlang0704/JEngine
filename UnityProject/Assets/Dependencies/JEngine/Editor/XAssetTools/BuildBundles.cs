@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using JEngine.Core;
-using libx;
 using UnityEditor;
 
 namespace JEngine.Editor
@@ -37,13 +36,13 @@ namespace JEngine.Editor
 
                 watch = new Stopwatch();
                 watch.Start();
-                BuildScript.ApplyBuildRules();
+                // BuildScript.ApplyBuildRules();
                 watch.Stop();
                 Log.Print("ApplyBuildRules in: " + watch.ElapsedMilliseconds + " ms.");
             
                 watch = new Stopwatch();
                 watch.Start();
-                BuildScript.BuildAssetBundles();
+                // BuildScript.BuildAssetBundles();
                 watch.Stop();
                 Log.Print("BuildAssetBundles in: " + watch.ElapsedMilliseconds + " ms."); 
             };

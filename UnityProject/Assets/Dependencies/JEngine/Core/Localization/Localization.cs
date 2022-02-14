@@ -41,7 +41,7 @@ namespace JEngine.Core
         private static Dictionary<string, Dictionary<string, string>> _phrases;//language,key,value
 
         private static string _language;
-        private const string CsvLoc = "Localization.csv";
+        private const string CsvLoc = "Assets/HotUpdateResources/TextAsset/Localization.csv";
 
         public static string CurrentLanguage
         {
@@ -56,7 +56,7 @@ namespace JEngine.Core
             _phrases = new Dictionary<string, Dictionary<string, string>>(0);
             ChangeLanguage(PlayerPrefs.GetString("JEngine.Core.Localization.language",CultureInfo.InstalledUICulture.Name));
 
-            var file = (TextAsset) AssetMgr.Load(CsvLoc, typeof(TextAsset));
+            var file = (TextAsset) await AssetMgr.LoadAsync(CsvLoc);
             if (file == null)
             {
                 Log.PrintError("Localization模块无效，因为没有获取到表格文件");

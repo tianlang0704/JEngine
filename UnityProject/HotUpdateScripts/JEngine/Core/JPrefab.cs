@@ -67,7 +67,7 @@ namespace JEngine.Core
             }
             else
             {
-                var obj = AssetMgr.Load(path, typeof(GameObject));
+                var obj = AssetMgr.Load<GameObject>(path);
                 Instance = obj != null ? obj as GameObject : null;
                 Loaded = true;
             }
@@ -89,7 +89,7 @@ namespace JEngine.Core
 
         private async Task LoadPrefabAsync(string path, Action<bool, JPrefab> callback)
         {
-            var obj = await AssetMgr.LoadAsync(path, typeof(GameObject));
+            var obj = await AssetMgr.LoadAsync(path);
             Instance = obj != null ? obj as GameObject : null;
             Loaded = true;
             callback?.Invoke(!Error, this);
@@ -125,7 +125,7 @@ namespace JEngine.Core
         /// State of loading a prefab
         /// 加载prefab的状态
         /// </summary>
-        public libx.LoadState State => AssetMgr.State(path);
+        // public UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus State => AssetMgr.State(path);
 
         /// <summary>
         /// Prefab GameObject (this is not in scene and it has not been instantiated)
