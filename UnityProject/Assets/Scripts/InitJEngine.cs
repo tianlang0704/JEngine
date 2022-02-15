@@ -28,11 +28,10 @@ public class InitJEngine : MonoBehaviour
 #endif
 
     //dll名字，入口函数名字，以及周期方法名
-    private const string DllName = "HotUpdateScripts.bytes";
+    private const string DllName = "Assets/HotUpdateResources/Dll/HotUpdateScripts.bytes";
     private const string HotMainType = "HotUpdateScripts.Program";
     private const string RunGameMethod = "RunGame";
     private const string SetupGameMethod = "SetupGame";
-    private const string gameScene = "Game.unity";
 
     //加密密钥
     [Tooltip("加密密钥，需要16位")] [FormerlySerializedAs("Key")] [SerializeField]

@@ -95,7 +95,7 @@ namespace JEngine
         private async void LoadGameScene()
         {
             OnMessage("正在初始化");
-            var handle = Addressables.InitializeAsync(true);
+            var handle = Addressables.InitializeAsync(false);
             await handle.Task;
             if (handle.Status == AsyncOperationStatus.Succeeded) {
                 OnProgress(0);
@@ -193,79 +193,102 @@ namespace JEngine
                 _step = Step.Versions;
             }
 
-            List<string> toUpdate = null;
             if (_step == Step.Versions) {
-                toUpdate = await RequestVersions();
+                await RequestVersions();
                 _step = Step.Prepared;
             }
 
             if (_step == Step.Prepared) {
-                Download(toUpdate);
+                Download();
             }
         }
 
-        private async Task<List<string>> RequestVersions()
+        private async Task RequestVersions()
         {
+            // 离线模式
             if (offline) {
                 OnComplete();
-                return null;
+                return;
             }
             OnMessage("正在获取版本信息...");
+            // 检查联网
             if (Application.internetReachability == NetworkReachability.NotReachable) {
-                var mb = MessageBox.Show("提示", "请检查网络连接状态", "重试", "退出");
-                await mb;
-                if (mb.isOk) {
-                    StartUpdate();
-                } else {
-                    Quit();
-                }
-
-                return null;
+                await ShowReconnect("请检查网络连接状态");
+                return;
             }
+            // 检查更新列表
             var catalogHandle = Addressables.CheckForCatalogUpdates(false);
             await catalogHandle.Task;
             if (catalogHandle.Status != AsyncOperationStatus.Succeeded) {
-                var mb = MessageBox.Show("提示", string.Format("获取服务器版本失败：{0}", catalogHandle.OperationException), "重试", "退出");
-                await mb;
-                if (mb.isOk) {
-                    StartUpdate();
-                } else {
-                    Quit();
-                }
-
-                return null;
+                await ShowReconnect(string.Format("获取服务器版本失败：{0}", catalogHandle.OperationException));
+                Addressables.Release(catalogHandle);
+                return;
             }
-            return catalogHandle.Result;
+            var catalogUpdateList = catalogHandle.Result;
+            Addressables.Release(catalogHandle);
+            if (catalogUpdateList.Count <= 0) {
+                return;
+            }
+            // 更新列表
+            var catalogDownloadHandle = Addressables.UpdateCatalogs(catalogUpdateList);
+            await catalogDownloadHandle.Task;
+            if (catalogDownloadHandle.Status != AsyncOperationStatus.Succeeded) {
+                await ShowReconnect(string.Format("下载服务器版本文件失败：{0}", catalogHandle.OperationException));
+                Addressables.Release(catalogDownloadHandle);
+                return;
+            }
+            Addressables.Release(catalogDownloadHandle);
         }
 
-        private async void Download(List<string> toUpdate)
+        private static string PreloadLabel = "preload";
+        private async void Download()
         {
+            // 检查更新大小
             OnMessage("正在检查版本信息...");
-            var sizeHandle = Addressables.GetDownloadSizeAsync(toUpdate);
+            var sizeHandle = Addressables.GetDownloadSizeAsync(PreloadLabel);
             await sizeHandle.Task;
+            if (sizeHandle.Status != AsyncOperationStatus.Succeeded) {
+                await ShowReconnect(string.Format("获取下载大小失败：{0}", sizeHandle.OperationException));
+                Addressables.Release(sizeHandle);
+                return;
+            }
             var totalSize = sizeHandle.Result;
-            if (totalSize > 0) {
-                var tips = string.Format("发现内容更新，总计需要下载 {0} 内容", totalSize);
-                var mb = MessageBox.Show("提示", tips, "下载", "退出");
-                await mb;
-                if (mb.isOk) {
-                    _step = Step.Download;
-                    var downloadHandle = Addressables.DownloadDependenciesAsync(toUpdate);
-                    long lastBytes = 0;
-                    int interval = 100;
-                    int factor = 1000 / interval;
-                    while (downloadHandle.IsDone) {
-                        var status = downloadHandle.GetDownloadStatus();
-                        var deltaBytes = (status.DownloadedBytes - lastBytes) * factor;
-                        OnUpdate(status.DownloadedBytes, totalSize, deltaBytes);
-                        await Task.Delay(interval);
-                    }
-                    OnComplete();
-                } else {
-                    Quit();
-                }
+            Addressables.Release(sizeHandle);
+            if (totalSize <= 0) OnComplete();
+            // 询问是否下载
+            var tips = string.Format("发现内容更新，总计需要下载 {0} 内容", totalSize);
+            var mb = MessageBox.Show("提示", tips, "下载", "退出");
+            await mb;
+            if (!mb.isOk) {
+                Quit();
+                return;
+            }
+            // 开始下载
+            _step = Step.Download;
+            var downloadHandle = Addressables.DownloadDependenciesAsync(PreloadLabel);
+            long lastBytes = 0;
+            int interval = 100;
+            int factor = 1000 / interval;
+            while (!downloadHandle.IsDone) {
+                var status = downloadHandle.GetDownloadStatus();
+                var deltaBytes = (status.DownloadedBytes - lastBytes) * factor;
+                lastBytes = status.DownloadedBytes;
+                OnUpdate(status.DownloadedBytes, totalSize, deltaBytes);
+                await Task.Delay(interval);
+            }
+            Addressables.Release(downloadHandle);
+            // 完成下载
+            OnComplete();
+        }
+
+        private async Task ShowReconnect(string msg)
+        {
+            var mb = MessageBox.Show("提示", msg, "重试", "退出");
+            await mb;
+            if (mb.isOk) {
+                StartUpdate();
             } else {
-                OnComplete();
+                Quit();
             }
         }
 

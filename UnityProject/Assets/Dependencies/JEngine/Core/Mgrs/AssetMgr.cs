@@ -14,8 +14,14 @@ namespace JEngine.Core
         private static readonly Dictionary<string, AsyncOperationHandle> AssetCache = new Dictionary<string, AsyncOperationHandle>();
         // private static readonly Dictionary<string, BundleRequest> BundleCache = new Dictionary<string, BundleRequest>();
 
-        // public static bool RuntimeMode => Assets.runtimeMode;
-        public static bool RuntimeMode => false;
+        public static bool RuntimeMode {
+            get {
+#if UNITY_EDITOR
+                return UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.ActivePlayModeDataBuilder.GetType().Name != "BuildScriptFastMode";
+#endif
+                return true;
+            }
+        }
 
         public static bool Loggable
         {

@@ -8431,7 +8431,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: JEngine examples
+  m_Text: "\u6D4B\u8BD5\u6D4B\u8BD5"
 --- !u!222 &2046311238
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8596,7 +8596,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

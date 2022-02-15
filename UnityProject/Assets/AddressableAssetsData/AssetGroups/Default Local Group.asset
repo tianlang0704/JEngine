@@ -20,7 +20,8 @@ MonoBehaviour:
   - m_GUID: a93e7da5c00c64c1aa3927b3f82363a6
     m_Address: Assets/HotUpdateResources
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - preload
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: da643f49f93de914cb21814be6f17775, type: 2}
   m_SchemaSet:
