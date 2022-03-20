@@ -56,7 +56,7 @@ namespace JEngine.Core
             _phrases = new Dictionary<string, Dictionary<string, string>>(0);
             ChangeLanguage(PlayerPrefs.GetString("JEngine.Core.Localization.language",CultureInfo.InstalledUICulture.Name));
 
-            var file = (TextAsset) await AssetMgr.LoadAsync(CsvLoc);
+            var file = AssetMgr.Load<TextAsset>(CsvLoc);
             if (file == null)
             {
                 Log.PrintError("Localization模块无效，因为没有获取到表格文件");
