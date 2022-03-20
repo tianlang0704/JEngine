@@ -67,33 +67,24 @@ public class InitJEngine : MonoBehaviour
     private void Awake()
     {
         //单例
-        if (Instance != null)
-        {
+        if (Instance != null) {
             Destroy(Instance.gameObject);
         }
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
 
+    private void Start()
+    {
         //初始化Debug
         GameStats.Initialize();
         GameStats.Debug = debug;
         AssetMgr.Loggable = debug;
 
         //进入热更后的回调
-        Updater.OnAssetsInitialized = (gameScene, onProgress) =>
+        Updater.Instance.OnAssetsInitialized = (gameScene) =>
         {
-            // //短路径
-            // Assets.AddSearchPath("Assets/HotUpdateResources/Controller");
-            // Assets.AddSearchPath("Assets/HotUpdateResources/Dll");
-            // Assets.AddSearchPath("Assets/HotUpdateResources/Material");
-            // Assets.AddSearchPath("Assets/HotUpdateResources/Other");
-            // Assets.AddSearchPath("Assets/HotUpdateResources/Prefab");
-            // Assets.AddSearchPath("Assets/HotUpdateResources/Scene");
-            // Assets.AddSearchPath("Assets/HotUpdateResources/ScriptableObject");
-            // Assets.AddSearchPath("Assets/HotUpdateResources/TextAsset");
-            // Assets.AddSearchPath("Assets/HotUpdateResources/UI");
-
             //跳转场景并初始化热更代码
             AssetMgr.LoadSceneAsync(gameScene, false, null, (b) =>
             {

@@ -57,6 +57,13 @@ namespace JEngine
         public void OnStart()
         {
             buttonStart.gameObject.SetActive(false);
+            Updater.Instance.StartUpdate();
+        }
+
+        public void OnClear()
+        {
+            buttonStart.gameObject.SetActive(true);
+            Updater.Instance.Clear();
         }
 
         public void OnMessage(string msg)
@@ -74,11 +81,6 @@ namespace JEngine
             version.text = ver;
         }
 
-
-        public void OnClear()
-        {
-            buttonStart.gameObject.SetActive(true);
-        }
 
         #endregion
     }

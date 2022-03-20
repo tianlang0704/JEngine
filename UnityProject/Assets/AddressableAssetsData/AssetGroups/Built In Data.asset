@@ -24,7 +24,8 @@ MonoBehaviour:
   - m_GUID: EditorSceneList
     m_Address: EditorSceneList
     m_ReadOnly: 1
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - preload
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: da643f49f93de914cb21814be6f17775, type: 2}
   m_SchemaSet:

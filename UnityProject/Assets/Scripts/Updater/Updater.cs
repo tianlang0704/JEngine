@@ -36,25 +36,32 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.SceneManagement;
 
 namespace JEngine
 {
     public interface IUpdater
     {
-        void OnStart();
-
         void OnMessage(string msg);
 
         void OnProgress(float progress);
 
         void OnVersion(string ver);
-
-        void OnClear();
     }
 
     [RequireComponent(typeof(NetworkMonitor))]
-    public class Updater : MonoBehaviour, IUpdater, INetworkMonitorListener
+    public class Updater : MonoBehaviour, INetworkMonitorListener
     {
+        static Updater _Instance;
+        static public Updater Instance {
+            get {
+                if (null == _Instance)
+                    _Instance = new GameObject("Updater").AddComponent<Updater>();   
+                return _Instance;
+            }
+        }
+        public AssetReferenceGameObject UpdateViewAsset;
+        private GameObject UpdateView;
         enum Step
         {
             Wait,
@@ -63,49 +70,37 @@ namespace JEngine
             Versions,
             Prepared,
             Download,
+            Complete,
+            None,
         }
 
         private Step _step;
 
         [SerializeField] private string gameScene = "Assets/HotUpdateResources/Scene/Game.unity";
         [Tooltip("离线模式")] [SerializeField] public bool offline;
-        public static Action<string,Action<float>> OnAssetsInitialized;
+        public Action<string> OnAssetsInitialized;
         public IUpdater listener { get; set; }
         private NetworkMonitor _monitor;
 
-        private void Start()
+        private void Awake()
+        {
+            //单例
+            if (_Instance != null) {
+                Destroy(_Instance.gameObject);
+            }
+            _Instance = this;
+        }
+
+        private async void Start()
         {
             _monitor = gameObject.GetComponent<NetworkMonitor>();
             _monitor.listener = this;
+            UpdateView = await UpdateViewAsset.InstantiateAsync().Task;
         }
         
         public void StartUpdate()
         {
-            OnStart();
             Checking();
-        }
-        
-        public void OnStart()
-        {
-            if (listener != null) {
-                listener.OnStart();
-            }
-        }
-        
-        private async void LoadGameScene()
-        {
-            OnMessage("正在初始化");
-            var handle = Addressables.InitializeAsync(false);
-            await handle.Task;
-            if (handle.Status == AsyncOperationStatus.Succeeded) {
-                OnProgress(0);
-                OnMessage("加载游戏场景");
-                OnAssetsInitialized?.Invoke(gameScene, OnProgress);
-            } else {
-                var mb = MessageBox.Show("提示", "初始化异常错误：" + handle.OperationException + "请联系技术支持");
-                await mb;
-                Quit();
-            }
         }
 
         private void OnDestroy()
@@ -166,17 +161,17 @@ namespace JEngine
             };
         }
 
-        public void OnClear()
+        public async void OnClear()
         {
             OnMessage("数据清除完毕");
             OnProgress(0);
             _step = Step.Wait;
             _reachabilityChanged = false;
+            await SceneManager.LoadSceneAsync("EmptyScene").ToUniTask();
+            Addressables.ClearDependencyCacheAsync(PreloadLabel);
             Caching.ClearCache();
-
-            if (listener != null) {
-                listener.OnClear();
-            }
+            Directory.Delete(Application.temporaryCachePath, true);
+            Directory.Delete(Application.persistentDataPath, true);
         }
 
         private async void Checking()
@@ -184,37 +179,34 @@ namespace JEngine
             if (_step == Step.Wait) {
                 _step = Step.Copy;
             }
-
             if (_step == Step.Copy) {
                 _step = Step.Coping;
             }
-
             if (_step == Step.Coping) {
                 _step = Step.Versions;
             }
-
             if (_step == Step.Versions) {
-                await RequestVersions();
-                _step = Step.Prepared;
+                _step = await RequestVersions();
             }
-
             if (_step == Step.Prepared) {
-                Download();
+                _step = await Download();
+            }
+            if (_step == Step.Complete) {
+                OnComplete();
             }
         }
 
-        private async Task RequestVersions()
+        private async Task<Step> RequestVersions()
         {
             // 离线模式
             if (offline) {
-                OnComplete();
-                return;
+                return Step.Complete;
             }
             OnMessage("正在获取版本信息...");
             // 检查联网
             if (Application.internetReachability == NetworkReachability.NotReachable) {
                 await ShowReconnect("请检查网络连接状态");
-                return;
+                return Step.None;
             }
             // 检查更新列表
             var catalogHandle = Addressables.CheckForCatalogUpdates(false);
@@ -222,49 +214,59 @@ namespace JEngine
             if (catalogHandle.Status != AsyncOperationStatus.Succeeded) {
                 await ShowReconnect(string.Format("获取服务器版本失败：{0}", catalogHandle.OperationException));
                 Addressables.Release(catalogHandle);
-                return;
+                return Step.None;
             }
             var catalogUpdateList = catalogHandle.Result;
             Addressables.Release(catalogHandle);
             if (catalogUpdateList.Count <= 0) {
-                return;
+                return Step.Prepared;
             }
             // 更新列表
-            var catalogDownloadHandle = Addressables.UpdateCatalogs(catalogUpdateList);
+            var catalogDownloadHandle = Addressables.UpdateCatalogs(null, false);
             await catalogDownloadHandle.Task;
             if (catalogDownloadHandle.Status != AsyncOperationStatus.Succeeded) {
-                await ShowReconnect(string.Format("下载服务器版本文件失败：{0}", catalogHandle.OperationException));
+                await ShowReconnect(string.Format("下载服务器版本文件失败：{0}", catalogDownloadHandle.OperationException));
                 Addressables.Release(catalogDownloadHandle);
-                return;
+                return Step.None;
             }
             Addressables.Release(catalogDownloadHandle);
+            return Step.Prepared;
         }
 
         private static string PreloadLabel = "preload";
-        private async void Download()
+        private async Task<Step> Download()
         {
             // 检查更新大小
             OnMessage("正在检查版本信息...");
             var sizeHandle = Addressables.GetDownloadSizeAsync(PreloadLabel);
-            await sizeHandle.Task;
-            if (sizeHandle.Status != AsyncOperationStatus.Succeeded) {
-                await ShowReconnect(string.Format("获取下载大小失败：{0}", sizeHandle.OperationException));
-                Addressables.Release(sizeHandle);
-                return;
+            long totalSize = 0;
+            try {
+                await sizeHandle.Task;
+                if (sizeHandle.Status != AsyncOperationStatus.Succeeded) {
+                    await ShowReconnect(string.Format("获取下载大小失败：{0}", sizeHandle.OperationException));
+                    return Step.None;
+                }
+                totalSize = sizeHandle.Result;
+                if (totalSize <= 0) return Step.Complete;
+            } 
+            catch(Exception e) {
+                await ShowReconnect(string.Format("下载失败：{0}", e));
+                return Step.None;
             }
-            var totalSize = sizeHandle.Result;
-            Addressables.Release(sizeHandle);
-            if (totalSize <= 0) OnComplete();
+            finally {
+                Addressables.Release(sizeHandle);
+            }
+            
             // 询问是否下载
             var tips = string.Format("发现内容更新，总计需要下载 {0} 内容", totalSize);
             var mb = MessageBox.Show("提示", tips, "下载", "退出");
             await mb;
             if (!mb.isOk) {
                 Quit();
-                return;
+                return Step.None;
             }
             // 开始下载
-            _step = Step.Download;
+            // _step = Step.Download;
             var downloadHandle = Addressables.DownloadDependenciesAsync(PreloadLabel);
             long lastBytes = 0;
             int interval = 100;
@@ -276,9 +278,13 @@ namespace JEngine
                 OnUpdate(status.DownloadedBytes, totalSize, deltaBytes);
                 await Task.Delay(interval);
             }
+            if (downloadHandle.Status != AsyncOperationStatus.Succeeded) {
+                Addressables.Release(downloadHandle);
+                await ShowReconnect(string.Format("下载失败：{0}", downloadHandle.OperationException));
+                return Step.None;
+            }
             Addressables.Release(downloadHandle);
-            // 完成下载
-            OnComplete();
+            return Step.Complete;
         }
 
         private async Task ShowReconnect(string msg)
@@ -318,6 +324,14 @@ namespace JEngine
             OnProgress(1);
             OnMessage("更新完成");
             LoadGameScene();
+        }
+
+        private void LoadGameScene()
+        {
+            OnMessage("正在初始化");
+            OnProgress(0);
+            OnMessage("加载游戏场景");
+            OnAssetsInitialized?.Invoke(gameScene);
         }
     }
 }

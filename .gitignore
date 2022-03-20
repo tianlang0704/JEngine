@@ -12,3 +12,14 @@ UnityProject/UnityProject.sln
 UnityProject/HotUpdateScripts/obj/*
 UnityProject/ProjectSettings/*
 UnityProject/Logs/*
+UnityProject/.vsconfig
+UnityProject/.vs
+UnityProject/Assets/AddressableAssetsData/Android.meta
+UnityProject/Assets/AddressableAssetsData/Android
+UnityProject/Assets/AddressableAssetsData/iOS.meta
+UnityProject/Assets/AddressableAssetsData/iOS
+UnityProject/Assets/AddressableAssetsData/Windows.meta
+UnityProject/Assets/AddressableAssetsData/Windows
+UnityProject/Builds
+UnityProject/ServerData
+UnityProject/test.apk

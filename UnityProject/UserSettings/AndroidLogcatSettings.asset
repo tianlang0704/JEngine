@@ -1,0 +1,179 @@
+{
+    "m_SelectedDeviceId": "192.168.31.8:5555",
+    "m_SelectedPackage": {
+        "deviceId": "192.168.31.8:5555",
+        "name": "com.DefaultCompany.JEngine",
+        "processId": 31078,
+        "exited": false
+    },
+    "m_SelectedPriority": 0,
+    "m_KnownPackagesForSerialization": [
+        {
+            "deviceId": "21465da4",
+            "name": "com.bbk.launcher2",
+            "processId": 3002,
+            "exited": false
+        },
+        {
+            "deviceId": "21465da4",
+            "name": "com.DefaultCompany.JEngine",
+            "processId": 27233,
+            "exited": true
+        },
+        {
+            "deviceId": "21465da4",
+            "name": "com.DefaultCompany.JEngine",
+            "processId": 32624,
+            "exited": true
+        },
+        {
+            "deviceId": "21465da4",
+            "name": "com.DefaultCompany.JEngine",
+            "processId": 2599,
+            "exited": true
+        },
+        {
+            "deviceId": "21465da4",
+            "name": "com.DefaultCompany.JEngine",
+            "processId": 3490,
+            "exited": false
+        },
+        {
+            "deviceId": "21465da4",
+            "name": "com.DefaultCompany.JEngine",
+            "processId": 27193,
+            "exited": false
+        },
+        {
+            "deviceId": "127.0.0.1:21503",
+            "name": "com.DefaultCompany.JEngine",
+            "processId": 2161,
+            "exited": true
+        },
+        {
+            "deviceId": "127.0.0.1:21503",
+            "name": "com.DefaultCompany.JEngine",
+            "processId": 7474,
+            "exited": true
+        },
+        {
+            "deviceId": "127.0.0.1:21503",
+            "name": "com.DefaultCompany.JEngine",
+            "processId": 30004,
+            "exited": true
+        },
+        {
+            "deviceId": "127.0.0.1:21503",
+            "name": "com.microvirt.launcher2",
+            "processId": 1040,
+            "exited": true
+        },
+        {
+            "deviceId": "127.0.0.1:21503",
+            "name": "com.DefaultCompany.JEngine",
+            "processId": 7043,
+            "exited": true
+        },
+        {
+            "deviceId": "127.0.0.1:21503",
+            "name": "com.DefaultCompany.JEngine",
+            "processId": 2045,
+            "exited": false
+        },
+        {
+            "deviceId": "127.0.0.1:21503",
+            "name": "com.DefaultCompany.JEngine",
+            "processId": 3873,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.31.8:5555",
+            "name": "com.microvirt.launcher2",
+            "processId": 3484,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.31.8:5555",
+            "name": "com.DefaultCompany.JEngine",
+            "processId": 24600,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.31.8:5555",
+            "name": "com.DefaultCompany.JEngine",
+            "processId": 27603,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.31.8:5555",
+            "name": "com.DefaultCompany.JEngine",
+            "processId": 29364,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.31.8:5555",
+            "name": "com.DefaultCompany.JEngine",
+            "processId": 29951,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.31.8:5555",
+            "name": "com.DefaultCompany.JEngine",
+            "processId": 31078,
+            "exited": false
+        }
+    ],
+    "m_Tags": {
+        "m_Entries": [
+            {
+                "m_Name": "Filter by all listed tags",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "No Filter",
+                "m_Selected": true
+            },
+            {
+                "m_Name": "",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "Tag Control...",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "Unity",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "CRASH",
+                "m_Selected": false
+            }
+        ]
+    },
+    "m_MemoryViewerState": {
+        "MemoryWindowHeight": 300.0,
+        "MemoryWindowWidth": 170.0,
+        "MemoryTypeEnabled": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "MemoryGroup": 2,
+        "Behavior": 0
+    },
+    "m_Filter": "debugger",
+    "m_FilterIsRegularExpression": false,
+    "m_SymbolPaths": []
+}
